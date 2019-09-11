@@ -7,7 +7,7 @@ import (
 
 const (
 	QueryDbParamsType = iota
-	QueryDbNamedType  = iota
+	QueryDbNamedType
 )
 
 func getQuerySql(queryType int, table, selectElem string, offset, limit int, columns ...string) string {

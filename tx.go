@@ -11,7 +11,6 @@ func execSqlByTx(query string, args ...interface{}) error {
 	if _, err := tx.Exec(query, args); err != nil {
 		return err
 	}
-
 	return tx.Commit()
 }
 
@@ -25,7 +24,6 @@ func namedExecSqlByTx(query string, arg interface{}) error {
 	if _, err := tx.NamedExec(query, arg); err != nil {
 		return err
 	}
-
 	return tx.Commit()
 }
 
@@ -39,7 +37,6 @@ func getSqlByTx(resp interface{}, query string, args ...interface{}) error {
 	if err := tx.Get(resp, query, args); err != nil {
 		return err
 	}
-
 	return tx.Commit()
 }
 
@@ -58,7 +55,6 @@ func namedGetSqlByTx(resp interface{}, query string, arg interface{}) error {
 	if err := tx.Get(resp, query, args); err != nil {
 		return err
 	}
-
 	return tx.Commit()
 }
 
@@ -72,7 +68,6 @@ func selectSqlByTx(resp interface{}, query string, args ...interface{}) error {
 	if err := tx.Select(resp, query, args); err != nil {
 		return err
 	}
-
 	return tx.Commit()
 }
 
@@ -91,6 +86,5 @@ func namedSelectSqlByTx(resp interface{}, query string, arg interface{}) error {
 	if err := tx.Select(resp, query, args); err != nil {
 		return err
 	}
-
 	return tx.Commit()
 }

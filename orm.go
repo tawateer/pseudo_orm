@@ -28,7 +28,6 @@ func GetTable(data interface{}, table string, column []string, args interface{})
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-
 	query := getQuerySql(QueryDbParamsType, table, "*", 0, -1, column...)
 	return getSqlByTx(data, query, args)
 }
@@ -37,7 +36,6 @@ func NamedGetTable(data interface{}, table string, column []string, arg interfac
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-
 	query := getQuerySql(QueryDbNamedType, table, "*", 0, -1, column...)
 	return namedGetSqlByTx(data, query, arg)
 }
@@ -46,7 +44,6 @@ func SelectTable(data interface{}, table string, column []string, args interface
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-
 	query := getQuerySql(QueryDbParamsType, table, "*", 0, -1, column...)
 	return selectSqlByTx(data, query, args)
 }
@@ -55,7 +52,6 @@ func NamedSelectTable(data interface{}, table string, column []string, arg inter
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-
 	query := getQuerySql(QueryDbNamedType, table, "*", 0, -1, column...)
 	return namedSelectSqlByTx(data, query, arg)
 }
