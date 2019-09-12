@@ -10,8 +10,8 @@ const (
 	QueryDbNamedType
 )
 
-func getQuerySql(queryType int, table, selectElem string, offset, limit int, columns ...string) string {
-	sql := fmt.Sprintf("select %s from %s", selectElem, table)
+func getQuerySql(queryType int, table, selectColumns string, offset, limit int, columns ...string) string {
+	sql := fmt.Sprintf("select %s from %s", selectColumns, table)
 	if len(columns) > 0 {
 		sql += " where " + strings.Join(processColumns1(queryType, columns...), " and ")
 	}
