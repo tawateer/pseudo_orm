@@ -29,7 +29,7 @@ func GetTable(data interface{}, table string, column []string, args interface{})
 		panic("must be reflect.Ptr")
 	}
 	query := getQuerySql(QueryDbParamsType, table, "*", 0, -1, column...)
-	return getSqlByTx(data, query, args)
+	return getByTx(data, query, args)
 }
 
 func NamedGetTable(data interface{}, table string, column []string, arg interface{}) error {
@@ -37,7 +37,7 @@ func NamedGetTable(data interface{}, table string, column []string, arg interfac
 		panic("must be reflect.Ptr")
 	}
 	query := getQuerySql(QueryDbNamedType, table, "*", 0, -1, column...)
-	return namedGetSqlByTx(data, query, arg)
+	return namedGetByTx(data, query, arg)
 }
 
 func SelectTable(data interface{}, table string, column []string, args interface{}) error {
@@ -45,7 +45,7 @@ func SelectTable(data interface{}, table string, column []string, args interface
 		panic("must be reflect.Ptr")
 	}
 	query := getQuerySql(QueryDbParamsType, table, "*", 0, -1, column...)
-	return selectSqlByTx(data, query, args)
+	return selectByTx(data, query, args)
 }
 
 func NamedSelectTable(data interface{}, table string, column []string, arg interface{}) error {
@@ -53,22 +53,22 @@ func NamedSelectTable(data interface{}, table string, column []string, arg inter
 		panic("must be reflect.Ptr")
 	}
 	query := getQuerySql(QueryDbNamedType, table, "*", 0, -1, column...)
-	return namedSelectSqlByTx(data, query, arg)
+	return namedSelectByTx(data, query, arg)
 }
 
 func UpdateTable(table string, primiries, columns []string, args interface{}) error {
 	query := getUpdateSql(QueryDbParamsType, table, primiries, columns...)
-	return execSqlByTx(query, args)
+	return execByTx(query, args)
 }
 
 func NamedUpdateTable(table string, primiries, columns []string, arg interface{}) error {
 	query := getUpdateSql(QueryDbNamedType, table, primiries, columns...)
-	return namedExecSqlByTx(query, arg)
+	return namedExecByTx(query, arg)
 }
 
 func InsertTable(table string, columns []string, args interface{}) error {
 	query := getInsertSql(QueryDbParamsType, table, columns...)
-	return execSqlByTx(query, args)
+	return execByTx(query, args)
 }
 
 func NamedInsertTable(table string, arg interface{}) error {
@@ -90,15 +90,15 @@ func NamedInsertTable(table string, arg interface{}) error {
 	}
 
 	query := getInsertSql(QueryDbNamedType, table, columns...)
-	return namedExecSqlByTx(query, arg)
+	return namedExecByTx(query, arg)
 }
 
 func DeleteTable(table string, columns []string, args interface{}) error {
 	query := getDeleteSql(QueryDbParamsType, table, columns...)
-	return execSqlByTx(query, args)
+	return execByTx(query, args)
 }
 
 func NamedDeleteTable(table string, columns []string, arg interface{}) error {
 	query := getDeleteSql(QueryDbNamedType, table, columns...)
-	return namedExecSqlByTx(query, arg)
+	return namedExecByTx(query, arg)
 }

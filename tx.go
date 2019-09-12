@@ -1,7 +1,7 @@
 package orm
 
 
-func execSqlByTx(query string, args ...interface{}) error {
+func execByTx(query string, args ...interface{}) error {
 	tx, err := txGetter()
 	if err != nil {
 		return err
@@ -14,7 +14,7 @@ func execSqlByTx(query string, args ...interface{}) error {
 	return tx.Commit()
 }
 
-func namedExecSqlByTx(query string, arg interface{}) error {
+func namedExecByTx(query string, arg interface{}) error {
 	tx, err := txGetter()
 	if err != nil {
 		return err
@@ -27,7 +27,7 @@ func namedExecSqlByTx(query string, arg interface{}) error {
 	return tx.Commit()
 }
 
-func getSqlByTx(resp interface{}, query string, args ...interface{}) error {
+func getByTx(resp interface{}, query string, args ...interface{}) error {
 	tx, err := txGetter()
 	if err != nil {
 		return err
@@ -40,7 +40,7 @@ func getSqlByTx(resp interface{}, query string, args ...interface{}) error {
 	return tx.Commit()
 }
 
-func namedGetSqlByTx(resp interface{}, query string, arg interface{}) error {
+func namedGetByTx(resp interface{}, query string, arg interface{}) error {
 	tx, err := txGetter()
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func namedGetSqlByTx(resp interface{}, query string, arg interface{}) error {
 	return tx.Commit()
 }
 
-func selectSqlByTx(resp interface{}, query string, args ...interface{}) error {
+func selectByTx(resp interface{}, query string, args ...interface{}) error {
 	tx, err := txGetter()
 	if err != nil {
 		return err
@@ -71,7 +71,7 @@ func selectSqlByTx(resp interface{}, query string, args ...interface{}) error {
 	return tx.Commit()
 }
 
-func namedSelectSqlByTx(resp interface{}, query string, arg interface{}) error {
+func namedSelectByTx(resp interface{}, query string, arg interface{}) error {
 	tx, err := txGetter()
 	if err != nil {
 		return err
