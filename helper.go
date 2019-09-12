@@ -24,7 +24,7 @@ func getQuerySql(queryType int, table, selectElem string, offset, limit int, col
 }
 
 func getInsertSql(queryType int, table string, columns ...string) string {
-	colNames := getSnakeColumns(columns...)
+	colNames := getColumns(columns...)
 	var secureColNames []string
 	for _, colName := range colNames {
 		secureColNames = append(secureColNames, "`"+colName+"`")
@@ -58,7 +58,7 @@ func getDeleteSql(queryType int, table string, columns ...string) string {
 //
 
 func processColumns1(queryType int, columns ...string) []string {
-	colNames := getSnakeColumns(columns...)
+	colNames := getColumns(columns...)
 	columnsPhrase := make([]string, 0, len(columns))
 	if queryType == QueryDbParamsType {
 		for _, col := range colNames {
@@ -74,7 +74,7 @@ func processColumns1(queryType int, columns ...string) []string {
 }
 
 func processColumns2(queryType int, columns ...string) string {
-	colNames := getSnakeColumns(columns...)
+	colNames := getColumns(columns...)
 	var columnsPhrase string
 	if queryType == QueryDbParamsType {
 		newColNames := make([]string, 0, len(colNames))
@@ -89,7 +89,7 @@ func processColumns2(queryType int, columns ...string) string {
 	return columnsPhrase
 }
 
-func getSnakeColumns(columns ...string) []string {
+func getColumns(columns ...string) []string {
 	colNames := make([]string, 0, len(columns))
 	for _, col := range columns {
 		colNames = append(colNames, mapper(col))
