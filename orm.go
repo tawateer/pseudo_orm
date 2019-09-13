@@ -24,35 +24,35 @@ func Init(t TxGetter, m Mapper, f TagFilter) {
 }
 
 
-func GetTable(data interface{}, table, selectColumns string, column []string, offset, limit int, args interface{}) error {
+func GetTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, args interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-	query := getQuerySql(QueryDbParamsType, table, selectColumns, offset, limit, column...)
+	query := getQuerySql(QueryDbParamsType, table, selectColumns, offset, limit, columns...)
 	return getByTx(data, query, args)
 }
 
-func NamedGetTable(data interface{}, table, selectColumns string, column []string, offset, limit int, arg interface{}) error {
+func NamedGetTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, arg interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-	query := getQuerySql(QueryDbNamedType, table, selectColumns, offset, limit, column...)
+	query := getQuerySql(QueryDbNamedType, table, selectColumns, offset, limit, columns...)
 	return namedGetByTx(data, query, arg)
 }
 
-func SelectTable(data interface{}, table string, column []string, args interface{}) error {
+func SelectTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, args interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-	query := getQuerySql(QueryDbParamsType, table, "*", 0, -1, column...)
+	query := getQuerySql(QueryDbParamsType, table, selectColumns, offset, limit, columns...)
 	return selectByTx(data, query, args)
 }
 
-func NamedSelectTable(data interface{}, table string, column []string, arg interface{}) error {
+func NamedSelectTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, arg interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-	query := getQuerySql(QueryDbNamedType, table, "*", 0, -1, column...)
+	query := getQuerySql(QueryDbNamedType, table, selectColumns, offset, limit, columns...)
 	return namedSelectByTx(data, query, arg)
 }
 
