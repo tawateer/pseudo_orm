@@ -78,7 +78,7 @@ func processColumns2(queryType int, columns ...string) string {
 	var columnsPhrase string
 	if queryType == QueryDbParamsType {
 		newColNames := make([]string, 0, len(colNames))
-		for _ := range colNames {
+		for _ = range colNames {
 			newColNames = append(newColNames, "?")
 		}
 		columnsPhrase = strings.Join(newColNames, ", ")
