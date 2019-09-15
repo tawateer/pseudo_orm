@@ -24,19 +24,19 @@ func Init(t TxGetter, m Mapper, f TagFilter) {
 }
 
 
-func GetTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, args interface{}) error {
+func GetTable(data interface{}, table, selectColumns string, columns []string, args interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-	query := getQuerySql(QueryDbParamsType, table, selectColumns, offset, limit, columns...)
+	query := getQuerySql(QueryDbParamsType, table, selectColumns, -1, -1, columns...)
 	return getByTx(data, query, args)
 }
 
-func NamedGetTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, arg interface{}) error {
+func NamedGetTable(data interface{}, table, selectColumns string, columns []string, arg interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
-	query := getQuerySql(QueryDbNamedType, table, selectColumns, offset, limit, columns...)
+	query := getQuerySql(QueryDbNamedType, table, selectColumns, -1, -1, columns...)
 	return namedGetByTx(data, query, arg)
 }
 

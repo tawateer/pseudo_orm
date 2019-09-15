@@ -19,11 +19,13 @@ func getQuerySql(queryType int, table, selectColumns string, offset, limit int, 
 		sql += " where " + strings.Join(processColumns1(queryType, columns...), " and ")
 	}
 
-	sql = fmt.Sprintf("%s offset %d", sql, offset)
-	if limit < 0 {
-		return sql
+	if offset >= 0 {
+		sql = fmt.Sprintf("%s offset %d", sql, offset)
 	}
-	return fmt.Sprintf("%s limit %d", sql, limit)
+	if limit >= 0 {
+		sql = fmt.Sprintf("%s limit %d", sql, limit)
+	}
+	return sql
 }
 
 func getInsertSql(queryType int, table string, columns ...string) string {
