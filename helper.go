@@ -8,6 +8,9 @@ import (
 const (
 	QueryDbParamsType = iota
 	QueryDbNamedType
+
+
+	ColumnSplitSymbol = ","
 )
 
 func getQuerySql(queryType int, table, selectColumns string, offset, limit int, columns ...string) string {
@@ -24,7 +27,7 @@ func getQuerySql(queryType int, table, selectColumns string, offset, limit int, 
 }
 
 func getInsertSql(queryType int, table string, columns ...string) string {
-	colNames := getColumns(columns...)
+	colNames, _ := getColumns(columns...)
 	var secureColNames []string
 	for _, colName := range colNames {
 		secureColNames = append(secureColNames, "`"+colName+"`")
@@ -58,27 +61,27 @@ func getDeleteSql(queryType int, table string, columns ...string) string {
 //
 
 func processColumns1(queryType int, columns ...string) []string {
-	colNames := getColumns(columns...)
+	colNames, colSymbols := getColumns(columns...)
 	columnsPhrase := make([]string, 0, len(columns))
 	if queryType == QueryDbParamsType {
-		for _, col := range colNames {
-			columnsPhrase = append(columnsPhrase, fmt.Sprintf("%s = ?", col))
+		for i, col := range colNames {
+			columnsPhrase = append(columnsPhrase, fmt.Sprintf("%s %s ?", col, colSymbols[i]))
 		}
 	}
 	if queryType == QueryDbNamedType {
-		for _, col := range colNames {
-			columnsPhrase = append(columnsPhrase, fmt.Sprintf("%s = :%s", col, col))
+		for i, col := range colNames {
+			columnsPhrase = append(columnsPhrase, fmt.Sprintf("%s %s :%s", col, col, colSymbols[i]))
 		}
 	}
 	return columnsPhrase
 }
 
 func processColumns2(queryType int, columns ...string) string {
-	colNames := getColumns(columns...)
+	colNames, _ := getColumns(columns...)
 	var columnsPhrase string
 	if queryType == QueryDbParamsType {
 		newColNames := make([]string, 0, len(colNames))
-		for _ = range colNames {
+		for range colNames {
 			newColNames = append(newColNames, "?")
 		}
 		columnsPhrase = strings.Join(newColNames, ", ")
@@ -89,10 +92,22 @@ func processColumns2(queryType int, columns ...string) string {
 	return columnsPhrase
 }
 
-func getColumns(columns ...string) []string {
+func getColumns(columns ...string) ([]string, []string) {
 	colNames := make([]string, 0, len(columns))
+	colSymbols := make([]string, 0, len(columns))
+
 	for _, col := range columns {
-		colNames = append(colNames, mapper(col))
+		n, s := splitColumn(col)
+		colNames = append(colNames, mapper(n))
+		colSymbols = append(colSymbols, s)
 	}
-	return colNames
+	return colNames, colSymbols
+}
+
+func splitColumn(column string) (string, string) {
+	i := strings.Index(column, ColumnSplitSymbol)
+	if i == -1 {
+		return column, "="
+	}
+	return column[:i], column[i+1:]
 }
