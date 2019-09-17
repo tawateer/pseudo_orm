@@ -24,7 +24,7 @@ func Init(t TxGetter, m Mapper, f TagFilter) {
 }
 
 
-func GetTable(data interface{}, table, selectColumns string, columns []string, args interface{}) error {
+func GetTable(data interface{}, table, selectColumns string, columns []string, args ...interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
@@ -40,7 +40,7 @@ func NamedGetTable(data interface{}, table, selectColumns string, columns []stri
 	return namedGetByTx(data, query, arg)
 }
 
-func SelectTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, args interface{}) error {
+func SelectTable(data interface{}, table, selectColumns string, columns []string, offset, limit int, args ...interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {
 		panic("must be reflect.Ptr")
 	}
@@ -56,7 +56,7 @@ func NamedSelectTable(data interface{}, table, selectColumns string, columns []s
 	return namedSelectByTx(data, query, arg)
 }
 
-func UpdateTable(table string, primiries, columns []string, args interface{}) error {
+func UpdateTable(table string, primiries, columns []string, args ...interface{}) error {
 	query := getUpdateSql(QueryDbParamsType, table, primiries, columns...)
 	return execByTx(query, args)
 }
@@ -66,7 +66,7 @@ func NamedUpdateTable(table string, primiries, columns []string, arg interface{}
 	return namedExecByTx(query, arg)
 }
 
-func InsertTable(table string, columns []string, args interface{}) error {
+func InsertTable(table string, columns []string, args ...interface{}) error {
 	query := getInsertSql(QueryDbParamsType, table, columns...)
 	return execByTx(query, args)
 }
@@ -93,7 +93,7 @@ func NamedInsertTable(table string, arg interface{}) error {
 	return namedExecByTx(query, arg)
 }
 
-func DeleteTable(table string, columns []string, args interface{}) error {
+func DeleteTable(table string, columns []string, args ...interface{}) error {
 	query := getDeleteSql(QueryDbParamsType, table, columns...)
 	return execByTx(query, args)
 }
