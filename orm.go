@@ -23,6 +23,13 @@ func Init(t TxGetter, m Mapper, f TagFilter) {
 	tagFilter = f
 }
 
+//
+
+func GetTx() (*sqlx.Tx, error) {
+	return txGetter()
+}
+
+//
 
 func GetTable(data interface{}, table, selectColumns string, columns []string, args ...interface{}) error {
 	if vi := reflect.ValueOf(data); vi.Kind() != reflect.Ptr {

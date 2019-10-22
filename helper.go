@@ -9,7 +9,6 @@ const (
 	QueryDbParamsType = iota
 	QueryDbNamedType
 
-
 	ColumnSplitSymbol = ","
 )
 
